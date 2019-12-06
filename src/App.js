@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, BrowserRouter,Route, Switch, Redirect } from 'react-router-dom'
+import {BrowserRouter,Route, Switch} from 'react-router-dom'
 import logo from './logo.svg';
 import { Card, Menu, Icon, Layout} from 'antd';
 import './App.css';
@@ -26,12 +26,10 @@ class App extends React.Component{
   logout(){
     sessionStorage.clear()
     this.setState({loggedIn: false})
-    console.log('logout')
   }
 
   login(){
     this.setState({loggedIn:true})
-    console.log('login')
   }
 
   render() {return(
