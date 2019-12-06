@@ -5,9 +5,9 @@ import { Card, Menu, Icon, Layout} from 'antd';
 import './App.css';
 
 import LoginForm from './components/loginForm';
-import PrivateRoute from './components/auth'
-import NaviBar from './components/navigation'
-import renderEmpty from 'antd/lib/config-provider/renderEmpty';
+import PrivateRoute from './components/auth';
+import NaviBar from './components/navigation';
+import AccountView from './components/accountView';
 
 const { Header, Footer, Sider, Content } = Layout;
 
@@ -17,14 +17,14 @@ class App extends React.Component{
   constructor(props){
     super(props)
     this.state = {
-      loggedIn:((sessionStorage.getItem('jwt')) == true),
+      loggedIn:((localStorage.getItem('jwt')) ? true : false),
     }
     this.logout = this.logout.bind(this)
     this.login = this.login.bind(this)
   }
 
   logout(){
-    sessionStorage.clear()
+    localStorage.clear()
     this.setState({loggedIn: false})
   }
 
@@ -46,7 +46,10 @@ class App extends React.Component{
               <PrivateRoute exact path="/" ></PrivateRoute>
               <Route exact path="/login"><LoginForm login={this.login}></LoginForm></Route>
               <PrivateRoute exact path="/logout"></PrivateRoute>
-              <PrivateRoute exact path="/information"></PrivateRoute>
+              <PrivateRoute exact path="/information">
+                <AccountView>
+                </AccountView>
+              </PrivateRoute>
             </Switch>
           </div>
         </Content>
