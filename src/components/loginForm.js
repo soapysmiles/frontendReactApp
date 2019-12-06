@@ -7,6 +7,8 @@ import {
   Button
 } from 'antd';
 
+var config = require('../config.js')
+
 class loginForm extends React.Component {
   constructor(props){
     super(props)
@@ -26,13 +28,8 @@ class loginForm extends React.Component {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        //echo the values to the browser console to make sure they are correct
-        console.log('Received values of form: ', values);
-
-        //here we should send a request to our server to post the user
-
         //use fetch API to post the user data
-        fetch('http://localhost:3030/api/v1.0.0/login', {
+        fetch(`${config.config.server_loc}/login`, {
           method: 'POST',
           headers: {
             'Accept': 'application/json',
@@ -49,7 +46,6 @@ class loginForm extends React.Component {
                 errorCode: res.status
             });
 
-
             return res.json()
         }).then(data => this.checkResponse(data))
       }
@@ -59,15 +55,23 @@ class loginForm extends React.Component {
   checkResponse = (data) => {
 
     if(this.state.loginSuccessful){
-      this.props.form.resetFields();
-      this.props.login();
+      if(data.user.deleted == 0){
+        this.props.form.resetFields();
+        this.props.login();
+        sessionStorage.setItem(`jwt`, data.token);
+        this.setState({
+            showSuccess:true,
+            showError : false
+          });
+      }else{
+        this.setState({
+            showSuccess:false,
+            showError : true,
+            errorMessage: 'User account is deleted - contact an admin to restore',
+            responseStatus: 'error'
+          });
+      }
       
-      sessionStorage.setItem(`jwt`, data.token);
-    
-      this.setState({
-        showSuccess:true,
-        showError : false
-      });
       
     }
     else{
