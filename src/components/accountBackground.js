@@ -78,7 +78,7 @@ class AccountBackground extends React.Component{
                 <Col md={{span: 12, offset: 6}}>
                     <div style={{margin: '0 auto', textAlign: 'center'}}>
                         <span>Username:<Title level={2}>{this.state.user.username}</Title></span>
-                        <span>Username:<Title level={2}>{this.state.user.countryAbbrev}</Title></span>
+                        <span>Country:<Title level={2}>{this.state.user.countryAbbrev}</Title></span>
                     </div>
                 </Col>
             </Row>
@@ -99,15 +99,17 @@ class AccountBackground extends React.Component{
                     </div>
                 </Col>
             </Row>
-            <Row>
-                
-                <Col md={{span: 3, offset: 9}}>
+            
+            <Row> 
+                <Col md={{span: 12, offset: 6}}>
                     <div style={{margin: '0 auto', textAlign: 'center'}}>
                         <span>First name:<Title level={4}>{this.state.user.firstName}</Title></span>
             
                     </div>
                 </Col>
-                <Col md={{span: 3, offset: 0}}>
+            </Row>
+            <Row>
+                <Col md={{span: 12, offset: 6}}>
                     <div style={{margin: '0 auto', textAlign: 'center'}}>
                         <span>Last name:<Title level={4}>{this.state.user.lastName}</Title></span>
             
@@ -116,12 +118,14 @@ class AccountBackground extends React.Component{
                 
             </Row>
             <Row>
-                <Col md={{span: 3, offset: 9}}>
+                <Col md={{span: 12, offset: 6}}>
                     <div style={{margin: '0 auto', textAlign: 'center'}}>
                         <span>Date of birth:<Title level={4}>{this.state.user.birthDate}</Title></span>
                     </div>
                 </Col>
-                <Col md={{span: 3, offset: 0}}>
+            </Row>
+            <Row>
+                <Col md={{span: 12, offset: 6}}>
                     <div style={{margin: '0 auto', textAlign: 'center'}}>
                         <span>Date of registration:<Title level={4}>{this.state.user.dateRegistered}</Title></span>
                     </div>
