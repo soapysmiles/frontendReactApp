@@ -1,5 +1,7 @@
 import React from 'react';
 
+import  { Redirect } from 'react-router-dom'
+
 import {
   Form,
   Input,
@@ -57,15 +59,18 @@ class loginForm extends React.Component {
     if(this.state.loginSuccessful){
       if(data.user.deleted == 0){
         this.props.form.resetFields();
-        this.props.login();
         localStorage.setItem(`jwt`, data.token);
-        localStorage.setItem('uid', data.user.ID);
-        localStorage.setItem('user', data.user);
+        localStorage.setItem(`uid`, data.user.ID);
+        localStorage.setItem(`tfaActivate`, (data.tfa == 1) ? true : false )
+        console.log("tfadata", (data.tfa == 1) ? true : false)
+        this.props.activateTfa(localStorage.getItem('tfaActivate'))
+        
         this.setState({
             showSuccess:true,
             showError : false
           });
       }else{
+        localStorage.setItem(`tfaActivate`, false )
         this.setState({
             showSuccess:false,
             showError : true,
@@ -114,9 +119,13 @@ class loginForm extends React.Component {
       },
     };
     
-
+    if(this.state.showSuccess || localStorage.getItem('jwt')){
+      return(
+        <Redirect to="/tfa"></Redirect>
+      )
+    }
     return (
-        
+      
       <Form {...formItemLayout} onSubmit={this.handleSubmit} >
         <Form.Item label="username" hasFeedback validateStatus={this.state.responseStatus}>
           {getFieldDecorator('username', {

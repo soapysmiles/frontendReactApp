@@ -28,7 +28,6 @@ class NaviBar extends React.Component {
   };
 
   render() {
-    console.log(this.props.loggedIn)
     return (
       <div className="naviBarOuter">
         <Sider
@@ -75,6 +74,8 @@ class NaviBar extends React.Component {
             }
           >
         {(this.props.loggedIn) ? <Menu.Item key="information" ><Link to="/information" >Account Information</Link></Menu.Item> : null}
+        {(this.props.loggedIn && this.props.tfaActive) ? <Menu.Item key="disableTFA" ><Link to="/tfaDeactivate">Disable TFA</Link></Menu.Item> : null}
+        {(this.props.loggedIn && !this.props.tfaActive) ? <Menu.Item key="enableTFA" ><Link to="/tfaActivate">Enable TFA</Link></Menu.Item> : null}
         {(this.props.loggedIn) ? <Menu.Item key="logout" onClick={() => {this.props.logout()}}><Link to="/logout" >Logout</Link></Menu.Item> : null}
         {(this.props.loggedIn) ? null : <Menu.Item key="login"><Link to="/login" >Login</Link></Menu.Item>}
         {(this.props.loggedIn) ? null : <Menu.Item key="register"><Link to="/register">Register</Link></Menu.Item>}
