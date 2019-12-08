@@ -78,7 +78,6 @@ class TFAloginForm extends React.Component {
     }
     else{
       //handle errors
-      this.props.login(false);//TODO remove this
       this.setState({
           
         errorMessage: data.message,
