@@ -2,6 +2,7 @@ import { Avatar, Alert, Typography, Row, Col, Form,
     Input,
     Button } from 'antd';
 import React from 'react';
+import  { Redirect } from 'react-router-dom'
 const { Title } = Typography;
 
 var config = require('../config.js')
@@ -19,6 +20,7 @@ class loginForm extends React.Component {
         errorMessage: "",
         secret: "",
         qrcode: "",
+        tfaActivate: props.tfaActivate,
     };
   }
   
@@ -76,7 +78,12 @@ class loginForm extends React.Component {
   }
 
   render() {
-    
+    if(!this.state.tfaActivate){
+        
+      return(
+          <Redirect to="/"></Redirect>
+      )
+    }
     
     return (
         <div>
