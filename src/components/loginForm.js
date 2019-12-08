@@ -58,7 +58,9 @@ class loginForm extends React.Component {
       if(data.user.deleted == 0){
         this.props.form.resetFields();
         this.props.login();
-        sessionStorage.setItem(`jwt`, data.token);
+        localStorage.setItem(`jwt`, data.token);
+        localStorage.setItem('uid', data.user.ID);
+        localStorage.setItem('user', data.user);
         this.setState({
             showSuccess:true,
             showError : false
