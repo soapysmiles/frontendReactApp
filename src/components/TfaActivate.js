@@ -2,7 +2,9 @@ import { Avatar, Alert, Typography, Row, Col, Form,
     Input,
     Button } from 'antd';
 import React from 'react';
+import  { Redirect } from 'react-router-dom'
 const { Title } = Typography;
+
 
 var config = require('../config.js')
 
@@ -19,6 +21,7 @@ class loginForm extends React.Component {
         errorMessage: "",
         secret: "",
         qrcode: "",
+        tfaActivate: props.tfaActivate,
     };
   }
   
@@ -76,6 +79,13 @@ class loginForm extends React.Component {
 
   render() {
     
+    if(this.state.tfaActivate){
+        
+        return(
+            <Redirect to="/"></Redirect>
+        )
+    }
+
     if(this.state.secret.length === 0){
         return (
             <div>
@@ -83,7 +93,7 @@ class loginForm extends React.Component {
                 
                 <Form.Item >
                 <Button type="primary" htmlType="submit" >
-                    ACTIVATE TFA
+                    ACTIVATE Two Factor Authentication
                 </Button>
                 </Form.Item>
                 {this.state.showSuccess ? <Alert message="Login successful" type="success" /> :null}
