@@ -1,13 +1,15 @@
-import { Avatar, Alert, Typography, Row, Col, Form,
-    Input,
-    Button } from 'antd';
+import { Alert, Typography, Form,Button } from 'antd';
 import React from 'react';
 import  { Redirect } from 'react-router-dom'
-const { Title } = Typography;
 
 var config = require('../config.js')
 
-class loginForm extends React.Component {
+/**
+ * @name tfaDeactivate Handles deactivating two factor authentication
+ * @type {class}
+ * @author A.M
+ */
+class tfaDeactivate extends React.Component {
   constructor(props){
     super(props)
     this.state = {
@@ -78,7 +80,7 @@ class loginForm extends React.Component {
   }
 
   render() {
-    if(!this.state.tfaActivate){
+    if(!this.state.tfaActivate){//If already not active
         
       return(
           <Redirect to="/"></Redirect>
@@ -101,6 +103,6 @@ class loginForm extends React.Component {
     
 }
 
-const activate = Form.create({ name: 'activate' })(loginForm);
+const activate = Form.create({ name: 'activate' })(tfaDeactivate);
 
 export default activate;

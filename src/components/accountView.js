@@ -5,6 +5,12 @@ import AccountBackground from './accountBackground'
 
 var config = require('../config.js')
 
+
+/**
+ * @name AccountView
+ * @type {class}
+ * @author A.M
+ */
 class AccountView extends React.Component{
     constructor(props){
         super(props)
@@ -19,18 +25,25 @@ class AccountView extends React.Component{
     }
 
     componentWillMount(){
-        this.showSkeleton();
+        this.showSkeleton();//Show the loading skeleton
     }
     
-
-    showSkeleton = () => {
+    /**
+     * @name showSkeleton
+     * @author A.M
+     */
+    showSkeleton = () => {//Shows for 3 seconds
         this.setState({ loading: true });
         setTimeout(() => {
           this.setState({ loading: false });
         }, 3000);
     };
 
-    stopSkeleton = () => {
+    /**
+     * @name stopSkeleton
+     * @author A.M
+     */
+    stopSkeleton = () => {//Stop skeleton early
         this.setState({ loading: false});
     }
 

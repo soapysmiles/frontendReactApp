@@ -4,6 +4,11 @@ const { Title } = Typography;
 
 var config = require('../config.js')
 
+/**
+ * @name AccountBackground Gets user details
+ * @type {class}
+ * @author A.M
+ */
 class AccountBackground extends React.Component{
     constructor(props){
         super(props);
@@ -26,8 +31,7 @@ class AccountBackground extends React.Component{
                     'Authorization' : `bearer ${localStorage.getItem('jwt')}`,
                 }
             }).then(res => {
-                if(this._isMounted){
-                    console.log(res)
+                if(this._isMounted){//Ensure component is mounted before continuing
                     if(res.ok)
                         this.setState({fetchSuccessful : true})
                     else
@@ -42,12 +46,12 @@ class AccountBackground extends React.Component{
             }).then(res => {
 
                 if(this.state.fetchSuccessful){
-                    this.props.stopSkeleton()
+                    this.props.stopSkeleton()//Loaded - Stop the skeleton
                     
-                    res.birthDate =  res.birthDate.slice(0,10);
-                    res.dateRegistered =  res.dateRegistered.slice(0,10);
+                    res.birthDate =  res.birthDate.slice(0,10);//Remove time
+                    res.dateRegistered =  res.dateRegistered.slice(0,10);//Remove time
 
-                    (res.active == 0) ? this.setState({showActive: true}) : this.setState({showActive: false})
+                    (res.active == 0) ? this.setState({showActive: true}) : this.setState({showActive: false})//Check if user account is active, message if not
 
                     this.setState({user: res})
                     
@@ -62,7 +66,6 @@ class AccountBackground extends React.Component{
     }
 
     render(){
-        console.log(this.state)
         return(
             <div style={{margin: '0 auto'}}>
             <Row type="flex" align="middle">

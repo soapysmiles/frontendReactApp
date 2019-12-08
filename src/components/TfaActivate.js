@@ -1,6 +1,4 @@
-import { Avatar, Alert, Typography, Row, Col, Form,
-    Input,
-    Button } from 'antd';
+import { Avatar, Alert, Typography, Row, Col, Form,Button } from 'antd';
 import React from 'react';
 import  { Redirect } from 'react-router-dom'
 const { Title } = Typography;
@@ -8,7 +6,12 @@ const { Title } = Typography;
 
 var config = require('../config.js')
 
-class loginForm extends React.Component {
+/**
+ * @name tfaActivate Handles activating two factor authentication
+ * @type {class}
+ * @author A.M
+ */
+class tfaActivate extends React.Component {
   constructor(props){
     super(props)
     this.state = {
@@ -79,14 +82,14 @@ class loginForm extends React.Component {
 
   render() {
     
-    if(this.state.tfaActivate){
+    if(this.state.tfaActivate){//Already activated
         
         return(
             <Redirect to="/"></Redirect>
         )
     }
 
-    if(this.state.secret.length === 0){
+    if(this.state.secret.length === 0){//If no secret, ask to authenticate
         return (
             <div>
             <Form onSubmit={this.handleSubmit} >
@@ -101,7 +104,7 @@ class loginForm extends React.Component {
             </Form>
             </div>
         );
-    }else{
+    }else{//Show secret & QR
         return(
             <div style={{margin: '0 auto'}}>
                 <Alert message="Two Factor Authentication is enabled - now use a TFA app to save this secret" type="success" />
@@ -128,6 +131,6 @@ class loginForm extends React.Component {
   }
 }
 
-const activate = Form.create({ name: 'activate' })(loginForm);
+const activate = Form.create({ name: 'activate' })(tfaActivate);
 
 export default activate;

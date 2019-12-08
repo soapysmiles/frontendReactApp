@@ -11,6 +11,11 @@ import {
 
 var config = require('../config.js')
 
+/**
+ * @name loginForm Post login details
+ * @type {class}
+ * @author A.M
+ */
 class loginForm extends React.Component {
   constructor(props){
     super(props)
@@ -57,13 +62,12 @@ class loginForm extends React.Component {
   checkResponse = (data) => {
 
     if(this.state.loginSuccessful){
-      if(data.user.deleted == 0){
+      if(data.user.deleted == 0){//If user account is deleted
         this.props.form.resetFields();
-        localStorage.setItem(`jwt`, data.token);
-        localStorage.setItem(`uid`, data.user.ID);
-        localStorage.setItem(`tfaActivate`, (data.tfa == 1) ? true : false )
-        console.log("tfadata", (data.tfa == 1) ? true : false)
-        this.props.activateTfa(localStorage.getItem('tfaActivate'))
+        localStorage.setItem(`jwt`, data.token);//Get & store jwt token
+        localStorage.setItem(`uid`, data.user.ID);//Get & store uid
+        localStorage.setItem(`tfaActivate`, (data.tfa == 1) ? true : false )//Set local storage tfa active
+        this.props.activateTfa(localStorage.getItem('tfaActivate'))//Make app aware tfa is active or not
         
         this.setState({
             showSuccess:true,
@@ -119,7 +123,7 @@ class loginForm extends React.Component {
       },
     };
     
-    if(this.state.showSuccess || localStorage.getItem('jwt')){
+    if(this.state.showSuccess || localStorage.getItem('jwt')){//User has successfully logged in
       return(
         <Redirect to="/tfa"></Redirect>
       )

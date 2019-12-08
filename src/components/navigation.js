@@ -1,9 +1,14 @@
 import React from 'react';
-import { Menu, Icon, Button, Layout } from 'antd';
+import { Menu, Icon, Layout } from 'antd';
 import { Link } from 'react-router-dom'
-const { Header, Footer, Sider, Content} = Layout;
+const { Sider} = Layout;
 const { SubMenu } = Menu;
 
+/**
+ * @name NaviBar Generates and handles navigation through SPA
+ * @type {class}
+ * @author A.M
+ */
 class NaviBar extends React.Component {
   constructor(props){
     super(props)
@@ -76,9 +81,10 @@ class NaviBar extends React.Component {
         {(this.props.loggedIn) ? <Menu.Item key="information" ><Link to="/information" >Account Information</Link></Menu.Item> : null}
         {(this.props.loggedIn && this.props.tfaActive) ? <Menu.Item key="disableTFA" ><Link to="/tfaDeactivate">Disable TFA</Link></Menu.Item> : null}
         {(this.props.loggedIn && !this.props.tfaActive) ? <Menu.Item key="enableTFA" ><Link to="/tfaActivate">Enable TFA</Link></Menu.Item> : null}
-        {(this.props.loggedIn) ? <Menu.Item key="logout" onClick={() => {this.props.logout()}}><Link to="/logout" >Logout</Link></Menu.Item> : null}
+       
         {(this.props.loggedIn) ? null : <Menu.Item key="login"><Link to="/login" >Login</Link></Menu.Item>}
         {(this.props.loggedIn) ? null : <Menu.Item key="register"><Link to="/register">Register</Link></Menu.Item>}
+        {(this.props.loggedIn || this.props.tfaActive) ? <Menu.Item key="logout" onClick={() => {this.props.logout()}}><Link to="/logout" >Logout</Link></Menu.Item> : null}
       </SubMenu>
       
       

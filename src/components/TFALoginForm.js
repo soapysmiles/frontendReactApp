@@ -4,12 +4,20 @@ import {
   Form,
   Input,
   Alert,
-  Button
+  Button,
+  Typography
 } from 'antd';
 import  { Redirect } from 'react-router-dom'
+const { Title } = Typography;
+
 var config = require('../config.js')
 
-class loginForm extends React.Component {
+/**
+ * @name TFAloginForm Handles logging in with two factor authentication
+ * @type {class}
+ * @author A.M
+ */
+class TFAloginForm extends React.Component {
   constructor(props){
     super(props)
     this.state = {
@@ -23,7 +31,6 @@ class loginForm extends React.Component {
     };
   }
   
-
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
@@ -36,8 +43,8 @@ class loginForm extends React.Component {
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            'Authorization' : `bearer ${localStorage.getItem('jwt')}`,
-            'userID': localStorage.getItem('uid'),
+            'Authorization' : `bearer ${localStorage.getItem('jwt')}`,//Add authorisation to header
+            'userID': localStorage.getItem('uid'),//Add userID to the header
           },
           
           body: JSON.stringify(values)
@@ -60,7 +67,7 @@ class loginForm extends React.Component {
   checkResponse = (data) => {
 
     if(this.state.activeSuccess){
-        localStorage.setItem(`secret`, data.secret);
+        localStorage.setItem(`secret`, data.secret);//Set the tfa secret
         
         this.props.login();
         
@@ -93,11 +100,11 @@ class loginForm extends React.Component {
     //this code will handle form responsivness on small devices
     const formItemLayout = {
       labelCol: {
-        xs: { span: 24 },
+        xs: { span: 16 },
         sm: { span: 8 },
       },
       wrapperCol: {
-        xs: { span: 24 },
+        xs: { span: 16 },
         sm: { span: 8 },
       },
     };
@@ -124,23 +131,24 @@ class loginForm extends React.Component {
         return (
         
             <Form {...formItemLayout} onSubmit={this.handleSubmit} >
-              
+              <Title level={2} style={{margin: '0 auto', textAlign: 'center'}}>Enter your Two Factor Authentication Token</Title>
+              <br/>
               <Form.Item label="token" hasFeedback validateStatus={this.state.responseStatus}>
                 {getFieldDecorator('token', {
                   rules: [
                     {
                       required: true,
-                      message: 'Please input your password!',
+                      message: 'Please input your token!',
                       
                     },
                     {
                       
                       min: 6,
-                      
+                      max: 6,
                       message: 'Token is 6 digits',
                     },
                   ],
-                })(<Input.Password />)}
+                })(<Input type="number" />)}
               </Form.Item>
               <Form.Item {...tailFormItemLayout}>
                 <Button type="primary" htmlType="submit">
@@ -157,6 +165,6 @@ class loginForm extends React.Component {
   }
 }
 
-const Signup = Form.create({ name: 'login' })(loginForm);
+const Signup = Form.create({ name: 'login' })(TFAloginForm);
 
 export default Signup;
